@@ -1,9 +1,9 @@
 import { Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ITransactionRepository } from '@transaction/domain/repositories/ITransactionRepository';
-import { Transaction } from '@transaction/domain/models/Transaction';
-import { TransactionEntity } from '@transaction/infraestructure/entities/Transaction.entity';
+import { ITransactionRepository } from '@transaction/domain/repositories/transaction.repository.interface';
+import { Transaction } from '@transaction/domain/models/transaction';
+import { TransactionEntity } from '@transaction/infraestructure/entities/transaction.entity';
 
 @Injectable()
 export class TransactionRepository implements ITransactionRepository {
@@ -61,6 +61,7 @@ export class TransactionRepository implements ITransactionRepository {
       throw new NotFoundException(`Transaction with ID ${id} not found`);
     }
     const { createdAt, ...updatedData } = updatedTransaction;
+
     await this.transactionRepository.update(id, updatedData);
   }
 }

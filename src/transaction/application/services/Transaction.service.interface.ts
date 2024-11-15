@@ -1,6 +1,7 @@
-import { CreateTransactionDTO } from '@transaction/application/dtos/request/CreateTransaction.dto';
-import { TransactionResponseDTO } from '@transaction/application/dtos/TransactionResponse.dto';
-import { UpdateTransactionDTO } from '@transaction/application/dtos/request/UpdateTransaction.dto';
+import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
+import { UpdateTransactionDTO } from '@transaction/application/dtos/request/updateTransaction.dto';
+import { PatchTransactionDTO } from '@transaction/application/dtos/request/patchTransaction.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
 
 export interface ITransactionService {
   createTransaction(
@@ -13,7 +14,7 @@ export interface ITransactionService {
 
   patchTransaction(
     id: string,
-    input: Partial<UpdateTransactionDTO>,
+    input: PatchTransactionDTO,
   ): Promise<TransactionResponseDTO>;
 
   updateTransaction(

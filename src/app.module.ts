@@ -4,16 +4,15 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TransactionModule } from '@transaction/Transaction.module';
-// import databaseConfig from '@infraestructure/config/database.config';
+import { TransactionModule } from '@transaction/transaction.module';
 import { join } from 'path';
-import { DatabaseModule } from '@database/Database.module';
+import { DatabaseModule } from '@database/database.module';
+import { AntiFraudModule } from '@antifraud/anti-fraud.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      // load: [databaseConfig],
     }),
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -25,6 +24,7 @@ import { DatabaseModule } from '@database/Database.module';
     }),
     DatabaseModule,
     TransactionModule,
+    AntiFraudModule,
   ],
   controllers: [AppController],
   providers: [AppService],

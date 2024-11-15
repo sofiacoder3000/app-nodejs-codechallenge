@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ITransactionRepository } from '@transaction/domain/repositories/ITransactionRepository';
-import { CreateTransactionDTO } from '@transaction/application/dtos/request/CreateTransaction.dto';
-import { TransactionMapper } from '@transaction/application/mappers/Transaction.mapper';
-import { TransactionResponseDTO } from '@transaction/application/dtos/TransactionResponse.dto';
-import { ICreateTransactionUseCase } from '@transaction/application/use-cases/CreateTransactionUseCase.interface';
+import { ITransactionRepository } from '@transaction/domain/repositories/transaction.repository.interface';
+import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
+import { TransactionMapper } from '@transaction/application/mappers/transaction.mapper';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { ICreateTransactionUseCase } from '@transaction/application/use-cases/create-transaction-use-case.interface';
 @Injectable()
 export class CreateTransactionUseCase implements ICreateTransactionUseCase {
   constructor(

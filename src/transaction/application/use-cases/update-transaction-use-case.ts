@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ITransactionRepository } from '@transaction/domain/repositories/ITransactionRepository';
-import { TransactionMapper } from '@transaction/application/mappers/Transaction.mapper';
-import { TransactionResponseDTO } from '@transaction/application/dtos/TransactionResponse.dto';
-import { IUpdateTransactionUseCase } from '@transaction/application/use-cases/UpdateTransactionUseCase.interface';
-import { Transaction } from '@transaction/domain/models/Transaction';
-import { UpdateTransactionDTO } from '../dtos/request/UpdateTransaction.dto';
+import { ITransactionRepository } from '@transaction/domain/repositories/transaction.repository.interface';
+import { TransactionMapper } from '@transaction/application/mappers/transaction.mapper';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { IUpdateTransactionUseCase } from '@transaction/application/use-cases/update-transaction-use-case.interface';
+import { Transaction } from '@transaction/domain/models/transaction';
+import { UpdateTransactionDTO } from '../dtos/request/updateTransaction.dto';
+import { PatchTransactionDTO } from '../dtos/request/patchTransaction.dto';
 @Injectable()
 export class UpdateTransactionUseCase implements IUpdateTransactionUseCase {
   constructor(
@@ -14,10 +15,10 @@ export class UpdateTransactionUseCase implements IUpdateTransactionUseCase {
 
   async patch(
     id: string,
-    updateData: Partial<UpdateTransactionDTO>,
+    patchData: PatchTransactionDTO,
   ): Promise<TransactionResponseDTO> {
     const partialTransaction: Partial<Transaction> =
-      TransactionMapper.mapUpdateDTOToTransaction(id, updateData);
+      TransactionMapper.mapPatchDTOToTransaction(id, patchData);
     const transactionOutput = await this.transactionRepository.patch(
       id,
       partialTransaction,

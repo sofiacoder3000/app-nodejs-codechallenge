@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ITransactionService } from '@transaction/application/services/Transaction.service.interface';
-import { ICreateTransactionUseCase } from '@transaction/application/use-cases/CreateTransactionUseCase.interface';
-import { CreateTransactionDTO } from '@transaction/application/dtos/request/CreateTransaction.dto';
-import { TransactionResponseDTO } from '@transaction/application/dtos/TransactionResponse.dto';
-import { IGetTransactionsUseCase } from '@transaction/application/use-cases/GetTransactionsUseCase.interface';
-import { UpdateTransactionDTO } from '@transaction/application/dtos/request/UpdateTransaction.dto';
-import { IUpdateTransactionUseCase } from '@transaction/application/use-cases/UpdateTransactionUseCase.interface';
+import { ITransactionService } from '@transaction/application/services/transaction.service.interface';
+import { ICreateTransactionUseCase } from '@transaction/application/use-cases/create-transaction-use-case.interface';
+import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { IGetTransactionsUseCase } from '@transaction/application/use-cases/get-transactions-use-case.interface';
+import { UpdateTransactionDTO } from '@transaction/application/dtos/request/updateTransaction.dto';
+import { IUpdateTransactionUseCase } from '@transaction/application/use-cases/update-transaction-use-case.interface';
+import { PatchTransactionDTO } from '@transaction/application/dtos/request/patchTransaction.dto';
 
 @Injectable()
 export class TransactionService implements ITransactionService {
@@ -34,7 +35,7 @@ export class TransactionService implements ITransactionService {
 
   async patchTransaction(
     id: string,
-    input: Partial<UpdateTransactionDTO>,
+    input: PatchTransactionDTO,
   ): Promise<TransactionResponseDTO> {
     return this.updateTransactionUseCase.patch(id, input);
   }

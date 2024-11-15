@@ -1,4 +1,4 @@
-import { TransactionResponseDTO } from '@transaction/application/dtos/TransactionResponse.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
 
 export interface IGetTransactionsUseCase {
   getTransactions(): Promise<TransactionResponseDTO[]>;

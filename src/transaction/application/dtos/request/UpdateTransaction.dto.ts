@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { InputType, Field } from '@nestjs/graphql';
 import { IsEnum } from 'class-validator';
 import { TransactionStatus } from '@transaction/domain/enums/transaction-status.enum';
-import { BaseTransactionDTO } from '@transaction/application/dtos/request/BaseTransaction.dto';
+import { BaseTransactionDTO } from '@transaction/application/dtos/request/baseTransaction.dto';
 
 @InputType()
 export class UpdateTransactionDTO extends BaseTransactionDTO {

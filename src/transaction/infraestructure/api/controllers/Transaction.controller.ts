@@ -17,10 +17,11 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreateTransactionDTO } from '@transaction/application/dtos/request/CreateTransaction.dto';
-import { TransactionResponseDTO } from '@transaction/application/dtos/TransactionResponse.dto';
-import { UpdateTransactionDTO } from '@transaction/application/dtos/request/UpdateTransaction.dto';
-import { ITransactionService } from '@transaction/application/services/Transaction.service.interface';
+import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { UpdateTransactionDTO } from '@transaction/application/dtos/request/updateTransaction.dto';
+import { ITransactionService } from '@transaction/application/services/transaction.service.interface';
+import { PatchTransactionDTO } from '@transaction/application/dtos/request/patchTransaction.dto';
 
 @ApiTags('Transactions')
 @Controller('transactions')
@@ -206,7 +207,7 @@ export class TransactionController {
   })
   async patch(
     @Param('id') id: string,
-    @Body() input: Partial<UpdateTransactionDTO>,
+    @Body() input: PatchTransactionDTO,
   ): Promise<TransactionResponseDTO> {
     return this.transactionService.patchTransaction(id, input);
   }

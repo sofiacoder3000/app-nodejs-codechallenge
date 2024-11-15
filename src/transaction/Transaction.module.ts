@@ -1,38 +1,36 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TransactionService } from '@transaction/infraestructure/services/Transaction.service';
-import { TransactionController } from '@transaction/infraestructure/api/controllers/Transaction.controller';
-import { TransactionRepository } from '@transaction/infraestructure/repositories/Transaction.repository';
-import { TransactionEntity } from '@transaction/infraestructure/entities/Transaction.entity';
-import { TransactionResolver } from '@transaction/infraestructure/api/resolvers/Transaction.resolver';
-import { CreateTransactionUseCase } from '@transaction/application/use-cases/CreateTransactionUseCase';
-import { GetTransactionsUseCase } from '@transaction/application/use-cases/GetTransactionsUseCase';
-import { UpdateTransactionUseCase } from '@transaction/application/use-cases/UpdateTransactionUseCase';
+import { TransactionService } from '@transaction/infraestructure/services/transaction.service';
+import { TransactionController } from '@transaction/infraestructure/api/controllers/transaction.controller';
+import { TransactionRepository } from '@transaction/infraestructure/repositories/transaction.repository';
+import { TransactionEntity } from '@transaction/infraestructure/entities/transaction.entity';
+import { TransactionResolver } from '@transaction/infraestructure/api/resolvers/transaction.resolver';
+import { CreateTransactionUseCase } from '@transaction/application/use-cases/create-transaction-use-case';
+import { GetTransactionsUseCase } from '@transaction/application/use-cases/get-transactions-use-case';
+import { UpdateTransactionUseCase } from '@transaction/application/use-cases/update-transaction-use-case';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([TransactionEntity]), // Importa la entidad Transaction
-  ],
+  imports: [TypeOrmModule.forFeature([TransactionEntity])],
   providers: [
     {
       provide: 'ITransactionService',
-      useClass: TransactionService, // Implementación de Transaction.service.ts
+      useClass: TransactionService,
     },
     {
       provide: 'ICreateTransactionUseCase',
-      useClass: CreateTransactionUseCase, // Implementación de CreateTransactionUseCase
+      useClass: CreateTransactionUseCase,
     },
     {
       provide: 'IGetTransactionsUseCase',
-      useClass: GetTransactionsUseCase, // Implementación de CreateTransactionUseCase
+      useClass: GetTransactionsUseCase,
     },
     {
       provide: 'IUpdateTransactionUseCase',
-      useClass: UpdateTransactionUseCase, // Implementación de CreateTransactionUseCase
+      useClass: UpdateTransactionUseCase,
     },
     {
       provide: 'ITransactionRepository',
-      useClass: TransactionRepository, // Implementación de Transaction.repository.ts
+      useClass: TransactionRepository,
     },
     TransactionResolver, // Resolver GraphQL
   ],

@@ -3,11 +3,16 @@
 # ------------------------------------------------------
 
 input CreateTransactionDTO {
+  """Identificador externo de la cuenta de crédito"""
   accountExternalIdCredit: String!
+
+  """Identificador externo de la cuenta de débito"""
   accountExternalIdDebit: String!
 
   """Transfer type"""
-  transferTypeId: TransferTypeEnum! = BANK_TRANSFER
+  transferTypeId: TransferTypeEnum!
+
+  """Valor de la transacción"""
   value: Float!
 }
 
@@ -18,7 +23,25 @@ scalar DateTime
 
 type Mutation {
   createTransaction(input: CreateTransactionDTO!): TransactionResponseDTO!
+  patchTransaction(id: String!, input: PatchTransactionDTO!): TransactionResponseDTO!
   updateTransaction(id: String!, input: UpdateTransactionDTO!): TransactionResponseDTO!
+}
+
+input PatchTransactionDTO {
+  """Identificador externo de la cuenta de crédito"""
+  accountExternalIdCredit: String
+
+  """Identificador externo de la cuenta de débito"""
+  accountExternalIdDebit: String
+
+  """Transaction Status"""
+  transactionStatus: TransferType
+
+  """Transfer type"""
+  transferTypeId: TransferTypeEnum
+
+  """Valor de la transacción"""
+  value: Float
 }
 
 type Query {
@@ -67,13 +90,18 @@ enum TransferTypeEnum {
 }
 
 input UpdateTransactionDTO {
+  """Identificador externo de la cuenta de crédito"""
   accountExternalIdCredit: String!
+
+  """Identificador externo de la cuenta de débito"""
   accountExternalIdDebit: String!
 
   """Transaction Status"""
   transactionStatus: TransferType
 
   """Transfer type"""
-  transferTypeId: TransferTypeEnum! = BANK_TRANSFER
+  transferTypeId: TransferTypeEnum!
+
+  """Valor de la transacción"""
   value: Float!
 }

@@ -10,7 +10,7 @@ export class BaseTransactionDTO {
     type: String,
     example: '4d70f4df-ce2a-4249-9ed9-4db00110e56c',
   })
-  @Field()
+  @Field({ description: 'Identificador externo de la cuenta de débito' })
   accountExternalIdDebit: string;
 
   @ApiProperty({
@@ -18,7 +18,7 @@ export class BaseTransactionDTO {
     type: String,
     example: 'cfeb71d5-b7d2-4540-bd50-c687ac1fd468',
   })
-  @Field()
+  @Field({ description: 'Identificador externo de la cuenta de crédito' })
   accountExternalIdCredit: string;
 
   @ApiProperty({
@@ -26,12 +26,10 @@ export class BaseTransactionDTO {
       'Código del tipo de transferencia. Valores posibles: 1 - Bank Transfer, 2 - PayPal, 3 - Crypto',
     enum: TransferType,
     enumName: 'TransferType',
-    default: TransferType.BANK_TRANSFER,
     example: 1,
   })
   @Field(() => TransferType, {
     description: 'Transfer type',
-    defaultValue: TransferType.BANK_TRANSFER,
   })
   @IsEnum(TransferType, { message: 'transferTypeId not defined' })
   transferTypeId: TransferType;
@@ -41,6 +39,6 @@ export class BaseTransactionDTO {
     type: Number,
     example: 100,
   })
-  @Field()
+  @Field({ description: 'Valor de la transacción' })
   value: number;
 }

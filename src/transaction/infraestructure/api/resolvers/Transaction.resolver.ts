@@ -1,9 +1,10 @@
 import { Inject } from '@nestjs/common';
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-import { CreateTransactionDTO } from '@transaction/application/dtos/request/CreateTransaction.dto';
-import { TransactionResponseDTO } from '@transaction/application/dtos/TransactionResponse.dto';
-import { UpdateTransactionDTO } from '@transaction/application/dtos/request/UpdateTransaction.dto';
-import { ITransactionService } from '@transaction/application/services/Transaction.service.interface';
+import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { UpdateTransactionDTO } from '@transaction/application/dtos/request/updateTransaction.dto';
+import { ITransactionService } from '@transaction/application/services/transaction.service.interface';
+import { PatchTransactionDTO } from '@transaction/application/dtos/request/patchTransaction.dto';
 
 @Resolver()
 export class TransactionResolver {
@@ -29,13 +30,13 @@ export class TransactionResolver {
     return this.transactionService.createTransaction(input);
   }
 
-  // @Mutation(() => TransactionResponseDTO)
-  // async patchTransaction(
-  //   @Args('id') id: string,
-  //   @Args('input') input: Partial<UpdateTransactionDTO>,
-  // ) {
-  //   return this.transactionService.patchTransaction(id, input);
-  // }
+  @Mutation(() => TransactionResponseDTO)
+  async patchTransaction(
+    @Args('id') id: string,
+    @Args('input') input: PatchTransactionDTO,
+  ) {
+    return this.transactionService.patchTransaction(id, input);
+  }
 
   @Mutation(() => TransactionResponseDTO)
   async updateTransaction(

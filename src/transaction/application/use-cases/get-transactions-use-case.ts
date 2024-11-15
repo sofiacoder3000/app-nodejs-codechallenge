@@ -1,8 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { IGetTransactionsUseCase } from '@transaction/application/use-cases/GetTransactionsUseCase.interface';
-import { TransactionResponseDTO } from '@transaction/application/dtos/TransactionResponse.dto';
-import { TransactionMapper } from '@transaction/application/mappers/Transaction.mapper';
-import { ITransactionRepository } from '@transaction/domain/repositories/ITransactionRepository';
+import { IGetTransactionsUseCase } from '@transaction/application/use-cases/get-transactions-use-case.interface';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { TransactionMapper } from '@transaction/application/mappers/transaction.mapper';
+import { ITransactionRepository } from '@transaction/domain/repositories/transaction.repository.interface';
 
 export class GetTransactionsUseCase implements IGetTransactionsUseCase {
   constructor(
