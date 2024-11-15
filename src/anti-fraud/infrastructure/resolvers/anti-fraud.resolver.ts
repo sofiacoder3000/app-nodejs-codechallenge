@@ -1,11 +1,15 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
-import { CheckFraudService } from '@antifraud/application/check-fraud/check-fraud.service';
 import { AntiFraudResponseDTO } from '@antifraud/application/dtos/anti-fraud-response.dto';
 import { CheckTransactionDTO } from '@antifraud/application/dtos/check-transaction.dto';
+import { IAntifraudService } from '@antifraud/application/services/anti-fraud.service.interface';
+import { Inject } from '@nestjs/common';
 
 @Resolver(() => AntiFraudResponseDTO)
 export class AntiFraudResolver {
-  constructor(private readonly checkFraudService: CheckFraudService) {}
+  constructor(
+    @Inject('IAntifraudService')
+    private readonly antifraudService: IAntifraudService,
+  ) {}
 
   @Query(() => String, { description: 'Health check for Anti-Fraud service' })
   healthCheck(): string {
@@ -15,9 +19,9 @@ export class AntiFraudResolver {
   @Query(() => AntiFraudResponseDTO, {
     description: 'Check transaction status',
   })
-  async checkTransaction(
+  checkTransaction(
     @Args('input') input: CheckTransactionDTO,
-  ): Promise<AntiFraudResponseDTO> {
-    return this.checkFraudService.checkTransaction(input);
+  ): AntiFraudResponseDTO {
+    return this.antifraudService.checkFraud(input);
   }
 }

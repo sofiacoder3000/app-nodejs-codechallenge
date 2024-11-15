@@ -1,16 +1,11 @@
+import { Injectable } from '@nestjs/common';
 import { AntiFraudResponseDTO } from '@antifraud/application/dtos/anti-fraud-response.dto';
 import { CheckTransactionDTO } from '@antifraud/application/dtos/check-transaction.dto';
-import { Injectable } from '@nestjs/common';
+import { ICheckFraudService } from '@antifraud/application/use-cases/check-fraud/check-fraud.service.interface';
 
 @Injectable()
-export class CheckFraudService {
-  execute(transactionAmount: number): boolean {
-    return transactionAmount > 1000;
-  }
-
-  async checkTransaction(
-    input: CheckTransactionDTO,
-  ): Promise<AntiFraudResponseDTO> {
+export class CheckFraudService implements ICheckFraudService {
+  execute(input: CheckTransactionDTO): AntiFraudResponseDTO {
     const { value } = input;
 
     const isValid = value <= 1000;

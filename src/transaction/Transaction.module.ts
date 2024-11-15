@@ -8,6 +8,7 @@ import { TransactionResolver } from '@transaction/infraestructure/api/resolvers/
 import { CreateTransactionUseCase } from '@transaction/application/use-cases/create-transaction-use-case';
 import { GetTransactionsUseCase } from '@transaction/application/use-cases/get-transactions-use-case';
 import { UpdateTransactionUseCase } from '@transaction/application/use-cases/update-transaction-use-case';
+import { TransactionProducer } from '@transaction/infraestructure/kafka/transaction-producer';
 
 @Module({
   imports: [TypeOrmModule.forFeature([TransactionEntity])],
@@ -32,12 +33,18 @@ import { UpdateTransactionUseCase } from '@transaction/application/use-cases/upd
       provide: 'ITransactionRepository',
       useClass: TransactionRepository,
     },
+    {
+      provide: 'ITransactionProducer',
+      useClass: TransactionProducer,
+    },
     TransactionResolver, // Resolver GraphQL
   ],
   controllers: [TransactionController], // Controlador REST
   exports: [
     'ITransactionRepository',
     'ICreateTransactionUseCase',
+    'IGetTransactionsUseCase',
+    'IUpdateTransactionUseCase',
     'ITransactionService',
   ],
 })

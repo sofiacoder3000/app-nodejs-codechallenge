@@ -1,20 +1,27 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ITransactionRepository } from '@transaction/domain/repositories/transaction.repository.interface';
+import { ITransactionRepository } from '@transaction/domain/ports/transaction.repository.interface';
 import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
 import { TransactionMapper } from '@transaction/application/mappers/transaction.mapper';
 import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
 import { ICreateTransactionUseCase } from '@transaction/application/use-cases/create-transaction-use-case.interface';
+import { ITransactionProducer } from '@transaction/application/ports/transaction-producer.interface';
 @Injectable()
 export class CreateTransactionUseCase implements ICreateTransactionUseCase {
   constructor(
     @Inject('ITransactionRepository')
     private readonly transactionRepository: ITransactionRepository,
+    @Inject('ITransactionProducer')
+    private readonly transactionProducer: ITransactionProducer,
   ) {}
 
   async execute(data: CreateTransactionDTO): Promise<TransactionResponseDTO> {
     const transactionInput = TransactionMapper.toDomain(data);
-    const transactionOutput =
+    const transactionCreated =
       await this.transactionRepository.create(transactionInput);
-    return TransactionMapper.toTransactionResponseDTO(transactionOutput);
+    await this.transactionProducer.sendTransactionCreatedEvent(
+      transactionCreated,
+    );
+
+    return TransactionMapper.toTransactionResponseDTO(transactionCreated);
   }
 }
