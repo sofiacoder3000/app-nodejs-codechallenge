@@ -61,7 +61,6 @@ export class TransactionRepository implements ITransactionRepository {
       throw new NotFoundException(`Transaction with ID ${id} not found`);
     }
     const { createdAt, ...updatedData } = updatedTransaction;
-
     await this.transactionRepository.update(id, updatedData);
   }
 }

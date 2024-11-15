@@ -2,6 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AntiFraudResponseDTO {
+  """Indicates if the transaction is valid"""
+  isValid: Boolean!
+
+  """Reason for fraud rejection, if any"""
+  reason: String
+}
+
+input CheckTransactionDTO {
+  """Transaction ID to verify"""
+  transactionId: String!
+
+  """Transaction value"""
+  value: Float!
+}
+
 input CreateTransactionDTO {
   """Identificador externo de la cuenta de crédito"""
   accountExternalIdCredit: String!
@@ -45,8 +61,13 @@ input PatchTransactionDTO {
 }
 
 type Query {
+  """Check transaction status"""
+  checkTransaction(input: CheckTransactionDTO!): AntiFraudResponseDTO!
   getTransaction(id: String!): TransactionResponseDTO!
   getTransactions: [TransactionResponseDTO!]!
+
+  """Health check for Anti-Fraud service"""
+  healthCheck: String!
 }
 
 type TransactionResponseDTO {
