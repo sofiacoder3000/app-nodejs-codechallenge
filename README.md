@@ -1,12 +1,23 @@
 # Yape Code Challenge :rocket:
 
-Our code challenge will let you marvel us with your Jedi coding skills :smile:. 
+Our code challenge will let you marvel us with your Jedi coding skills :smile:.
 
 Don't forget that the proper way to submit your work is to fork the repo and create a PR :wink: ... have fun !!
 
+- [Yape Code Challenge :rocket:](#yape-code-challenge-rocket)
 - [Problem](#problem)
-- [Tech Stack](#tech_stack)
-- [Send us your challenge](#send_us_your_challenge)
+- [Tech Stack](#tech-stack)
+  - [Optional](#optional)
+- [Send us your challenge](#send-us-your-challenge)
+- [Solution Challenge](#solution-challenge)
+  - [Instructions for compile](#instructions-for-compile)
+    - [1. Installation](#1-installation)
+    - [2. Config .env](#2-config-env)
+    - [3. Run containers in the background](#3-run-containers-in-the-background)
+    - [4. Run project](#4-run-project)
+    - [5. Check swagger documentation in http://localhost:3000/api](#5-check-swagger-documentation-in-httplocalhost3000api)
+    - [6. Check graphql documentation in http://localhost:3000/graphql](#6-check-graphql-documentation-in-httplocalhost3000graphql)
+  - [Troubleshooting](#troubleshooting)
 
 # Problem
 
@@ -80,3 +91,112 @@ You can use Graphql;
 When you finish your challenge, after forking a repository, you **must** open a pull request to our repository. There are no limitations to the implementation, you can follow the programming paradigm, modularization, and style that you feel is the most appropriate solution.
 
 If you have any questions, please let us know.
+
+# Solution Challenge
+
+## Instructions for compile
+
+### 1. Installation
+
+```bash
+$ yarn install
+```
+
+A default option and an alternative option (option 2) are presented, choose the one that suits you best.
+
+- Default option: Default option: Dockerize services and project run outside of docker
+- Alternative option (option 2): Dockerize entire project
+
+### 2. Config .env
+
+Create a .env file in the root of the project and place all the keys that appear in it .env.example and complete theys values
+
+```
+# docker-compose.yml
+DB_TYPE=postgres
+DB_HOST=localhost
+DB_PORT=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+```
+
+or
+
+option 2: Dockerize the entire project (In DB_HOST use name service of databse when dockerize entire project)
+
+```
+# docker-compose.dev.yml
+DB_TYPE=postgres
+DB_HOST=postgres
+DB_PORT=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+```
+
+### 3. Run containers in the background
+
+```bash
+$ docker-compose -f docker-compose.yml up -d
+```
+
+or option 2: use docker-compose.dev.yml to dockerize the entire project
+
+```bash
+$ docker-compose -f docker-compose.dev.yml up -d
+```
+
+### 4. Run project
+
+```bash
+# development
+$ yarn run start
+
+# watch mode
+$ yarn run start:dev
+
+# production mode
+$ yarn run start:prod
+```
+
+### 5. Check swagger documentation in http://localhost:3000/api
+
+### 6. Check graphql documentation in http://localhost:3000/graphql
+
+## Troubleshooting
+
+If you had this message when trying to launch the project with step 4
+
+```
+ERROR [TypeOrmModule] Unable to connect to the database. Retrying (2)...
+    error: ������������ "admin" �� ������ �������� ����������� (�� ������)
+        at Parser.parseErrorMessage
+```
+
+Make sure you don't have any resource conflicts.
+Solve fix: Please uninstall postgress if you have it installed on your PC and cannot resolve the resource conflict.
+
+```bash
+$ psql --version
+```
+
+If installed, you will see something like:
+
+```scss
+psql (PostgreSQL) 14.4
+```
+
+Check if it is active:
+
+```bash
+$ service postgresql status
+```
+
+Check ports:
+
+```bash
+$ netstat -an | grep 5432
+```
+
+More info about fix, check: https://stackoverflow.com/questions/73906739/nestjs-app-cant-connect-to-postgresql-docker-container

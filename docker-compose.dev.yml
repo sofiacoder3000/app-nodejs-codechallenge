@@ -30,6 +30,36 @@ services:
       - 9092:9092
     networks:
       - app-network
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - '5050:80'
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+  nestjs-app:
+    build:
+      context: .
+    container_name: nestjs-app
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    ports:
+      - '3000:3000'
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
 networks:
   app-network:
     driver: bridge

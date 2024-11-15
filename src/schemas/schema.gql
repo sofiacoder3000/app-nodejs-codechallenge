@@ -1,0 +1,79 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateTransactionDTO {
+  accountExternalIdCredit: String!
+  accountExternalIdDebit: String!
+
+  """Transfer type"""
+  transferTypeId: TransferTypeEnum! = BANK_TRANSFER
+  value: Float!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createTransaction(input: CreateTransactionDTO!): TransactionResponseDTO!
+  updateTransaction(id: String!, input: UpdateTransactionDTO!): TransactionResponseDTO!
+}
+
+type Query {
+  getTransaction(id: String!): TransactionResponseDTO!
+  getTransactions: [TransactionResponseDTO!]!
+}
+
+type TransactionResponseDTO {
+  createdAt: DateTime!
+  transactionExternalId: String!
+  transactionStatus: TransactionStatusResponseDTO!
+  transactionType: TransactionTypeResponseDTO!
+  value: Float!
+}
+
+type TransactionStatusResponseDTO {
+  name: String!
+}
+
+type TransactionTypeResponseDTO {
+  name: String!
+}
+
+"""Tipos de transferencia"""
+enum TransferType {
+  """Transferencia aprovada"""
+  APPROVED
+
+  """Transferencia pendiente de revisión"""
+  PENDING
+
+  """Transferencia rechazada"""
+  REJECTED
+}
+
+"""Tipos de transferencia"""
+enum TransferTypeEnum {
+  """Bank Transfer"""
+  BANK_TRANSFER
+
+  """Crypto"""
+  CRYPTO
+
+  """Paypal"""
+  PAYPAL
+}
+
+input UpdateTransactionDTO {
+  accountExternalIdCredit: String!
+  accountExternalIdDebit: String!
+
+  """Transaction Status"""
+  transactionStatus: TransferType
+
+  """Transfer type"""
+  transferTypeId: TransferTypeEnum! = BANK_TRANSFER
+  value: Float!
+}
