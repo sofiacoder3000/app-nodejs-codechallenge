@@ -18,6 +18,8 @@ Don't forget that the proper way to submit your work is to fork the repo and cre
     - [5. Check swagger documentation in http://localhost:3000/api](#5-check-swagger-documentation-in-httplocalhost3000api)
     - [6. Check graphql documentation in http://localhost:3000/graphql](#6-check-graphql-documentation-in-httplocalhost3000graphql)
   - [Troubleshooting](#troubleshooting)
+  - [ Postman: Colección y Entornos](#-postman-colección-y-entornos)
+    - [Ubicación de los archivos](#ubicación-de-los-archivos)
   - [GraphQL API Usage](#graphql-api-usage)
     - [Crear transacción](#crear-transacción)
     - [Actualizar una transacción](#actualizar-una-transacción)
@@ -205,6 +207,12 @@ $ netstat -an | grep 5432
 ```
 
 More info about fix, check: https://stackoverflow.com/questions/73906739/nestjs-app-cant-connect-to-postgresql-docker-container
+
+## [![Postman](https://img.shields.io/badge/Postman-F38020.svg?logo=postman&logoColor=white)](#) Postman: Colección y Entornos
+
+### Ubicación de los archivos
+
+- **Colección y variables de entorno Postman**: [postman/](./postman/)
 
 ## GraphQL API Usage
 
