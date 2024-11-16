@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ITransactionRepository } from '@transaction/domain/ports/transaction.repository.interface';
 import { TransactionMapper } from '@transaction/application/mappers/transaction.mapper';
-import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transaction-response.dto';
 import { IUpdateTransactionUseCase } from '@transaction/application/use-cases/update-transaction-use-case.interface';
 import { Transaction } from '@transaction/domain/models/transaction';
-import { UpdateTransactionDTO } from '../dtos/request/updateTransaction.dto';
-import { PatchTransactionDTO } from '../dtos/request/patchTransaction.dto';
+import { UpdateTransactionDTO } from '../dtos/request/update-transaction.dto';
+import { PatchTransactionDTO } from '../dtos/request/patch-transaction.dto';
 @Injectable()
 export class UpdateTransactionUseCase implements IUpdateTransactionUseCase {
   constructor(

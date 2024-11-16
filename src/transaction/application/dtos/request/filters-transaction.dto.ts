@@ -1,11 +1,11 @@
+import { Field, InputType, PartialType } from '@nestjs/graphql';
 import { ApiProperty } from '@nestjs/swagger';
-import { InputType, Field } from '@nestjs/graphql';
-import { IsEnum } from 'class-validator';
+import { BaseTransactionDTO } from '@transaction/application/dtos/request/base-transaction.dto';
 import { TransactionStatus } from '@transaction/domain/enums/transaction-status.enum';
-import { BaseTransactionDTO } from '@transaction/application/dtos/request/baseTransaction.dto';
+import { IsEnum } from 'class-validator';
 
 @InputType()
-export class UpdateTransactionDTO extends BaseTransactionDTO {
+export class FiltersTransactionDTO extends PartialType(BaseTransactionDTO) {
   @ApiProperty({
     description:
       'Estado de la transacción. Valores posibles: 1 - PENDING, 2 - APPROVED, 3 - REJECTED',

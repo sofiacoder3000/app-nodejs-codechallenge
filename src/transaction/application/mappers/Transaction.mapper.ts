@@ -1,12 +1,13 @@
-import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
-import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
-import { UpdateTransactionDTO } from '@transaction/application/dtos/request/updateTransaction.dto';
+import { CreateTransactionDTO } from '@transaction/application/dtos/request/create-transaction.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transaction-response.dto';
+import { UpdateTransactionDTO } from '@transaction/application/dtos/request/update-transaction.dto';
 import {
   TransactionStatus,
   TransactionStatusDescriptions,
 } from '@transaction/domain/enums/transaction-status.enum';
 import { TransferTypeDescriptions } from '@transaction/domain/enums/transfer-type.enum';
 import { Transaction } from '@transaction/domain/models/transaction';
+import { FiltersTransactionDTO } from '@transaction/application/dtos/request/filters-transaction.dto';
 
 export class TransactionMapper {
   static toDomain(dto: Partial<CreateTransactionDTO>): Transaction {
@@ -97,6 +98,34 @@ export class TransactionMapper {
 
     if (updateDTO.value !== undefined) {
       transaction.value = updateDTO.value;
+    }
+
+    return transaction;
+  }
+
+  static mapFilterDTOToTransaction(
+    filterDTO: Partial<FiltersTransactionDTO>,
+  ): Transaction {
+    const transaction = {} as Transaction;
+
+    if (filterDTO.accountExternalIdDebit !== undefined) {
+      transaction.accountExternalIdDebit = filterDTO.accountExternalIdDebit;
+    }
+
+    if (filterDTO.accountExternalIdCredit !== undefined) {
+      transaction.accountExternalIdCredit = filterDTO.accountExternalIdCredit;
+    }
+
+    if (filterDTO.transferTypeId !== undefined) {
+      transaction.transferTypeId = filterDTO.transferTypeId;
+    }
+
+    if (filterDTO.transactionStatus !== undefined) {
+      transaction.transactionStatus = filterDTO.transactionStatus;
+    }
+
+    if (filterDTO.value !== undefined) {
+      transaction.value = filterDTO.value;
     }
 
     return transaction;

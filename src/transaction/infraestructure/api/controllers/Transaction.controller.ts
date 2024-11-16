@@ -8,20 +8,24 @@ import {
   Put,
   Patch,
   Param,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBody,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
-import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
-import { UpdateTransactionDTO } from '@transaction/application/dtos/request/updateTransaction.dto';
+import { CreateTransactionDTO } from '@transaction/application/dtos/request/create-transaction.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transaction-response.dto';
+import { UpdateTransactionDTO } from '@transaction/application/dtos/request/update-transaction.dto';
 import { ITransactionService } from '@transaction/application/services/transaction.service.interface';
-import { PatchTransactionDTO } from '@transaction/application/dtos/request/patchTransaction.dto';
+import { PatchTransactionDTO } from '@transaction/application/dtos/request/patch-transaction.dto';
+import { GetTransactionsInputDTO } from '@transaction/application/dtos/request/get-transaction-input.dto';
+import { PaginatedTransactionsDTO } from '@transaction/application/dtos/paginated-transactions.dto';
 
 @ApiTags('Transactions')
 @Controller('transactions')
@@ -111,6 +115,30 @@ export class TransactionController {
   }
 
   @Get()
+  @ApiQuery({
+    name: 'transferTypeId',
+    required: false,
+    type: Number,
+    description: 'Tipo de transacción',
+  })
+  @ApiQuery({
+    name: 'transactionStatus',
+    required: false,
+    type: Number,
+    description: 'Estado de la transacción',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Límite de resultados',
+  })
+  @ApiQuery({
+    name: 'offset',
+    required: false,
+    type: Number,
+    description: 'Desplazamiento de resultados',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Lista de transacciones obtenida exitosamente.',
@@ -146,8 +174,21 @@ export class TransactionController {
       },
     },
   })
-  async get(): Promise<TransactionResponseDTO[]> {
-    return this.transactionService.getTransactions();
+  async get(
+    @Query('transferType') transferTypeId?: number,
+    @Query('transactionStatus') transactionStatus?: number,
+    @Query('limit') limit?: number,
+    @Query('offset') offset?: number,
+  ): Promise<PaginatedTransactionsDTO> {
+    const inputFilters: GetTransactionsInputDTO = {
+      filters: {
+        transferTypeId,
+        transactionStatus,
+      },
+      limit,
+      offset,
+    };
+    return this.transactionService.getTransactions(inputFilters);
   }
 
   @Get(':id')

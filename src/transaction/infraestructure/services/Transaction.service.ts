@@ -1,12 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ITransactionService } from '@transaction/application/services/transaction.service.interface';
 import { ICreateTransactionUseCase } from '@transaction/application/use-cases/create-transaction-use-case.interface';
-import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
-import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { CreateTransactionDTO } from '@transaction/application/dtos/request/create-transaction.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transaction-response.dto';
 import { IGetTransactionsUseCase } from '@transaction/application/use-cases/get-transactions-use-case.interface';
-import { UpdateTransactionDTO } from '@transaction/application/dtos/request/updateTransaction.dto';
+import { UpdateTransactionDTO } from '@transaction/application/dtos/request/update-transaction.dto';
 import { IUpdateTransactionUseCase } from '@transaction/application/use-cases/update-transaction-use-case.interface';
-import { PatchTransactionDTO } from '@transaction/application/dtos/request/patchTransaction.dto';
+import { PatchTransactionDTO } from '@transaction/application/dtos/request/patch-transaction.dto';
+import { GetTransactionsInputDTO } from '@transaction/application/dtos/request/get-transaction-input.dto';
+import { PaginatedTransactionsDTO } from '@transaction/application/dtos/paginated-transactions.dto';
 
 @Injectable()
 export class TransactionService implements ITransactionService {
@@ -25,8 +27,10 @@ export class TransactionService implements ITransactionService {
     return this.createTransactionUseCase.execute(input);
   }
 
-  async getTransactions(): Promise<TransactionResponseDTO[]> {
-    return this.getTransactionsUseCase.getTransactions();
+  async getTransactions(
+    filters: GetTransactionsInputDTO,
+  ): Promise<PaginatedTransactionsDTO> {
+    return this.getTransactionsUseCase.getTransactionsByFilters(filters);
   }
 
   async getTransaction(id: string): Promise<TransactionResponseDTO> {

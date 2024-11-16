@@ -1,8 +1,10 @@
 import { Inject } from '@nestjs/common';
 import { IGetTransactionsUseCase } from '@transaction/application/use-cases/get-transactions-use-case.interface';
-import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transaction-response.dto';
 import { TransactionMapper } from '@transaction/application/mappers/transaction.mapper';
 import { ITransactionRepository } from '@transaction/domain/ports/transaction.repository.interface';
+import { GetTransactionsInputDTO } from '@transaction/application/dtos/request/get-transaction-input.dto';
+import { PaginatedTransactionsDTO } from '@transaction/application/dtos/paginated-transactions.dto';
 
 export class GetTransactionsUseCase implements IGetTransactionsUseCase {
   constructor(
@@ -10,12 +12,40 @@ export class GetTransactionsUseCase implements IGetTransactionsUseCase {
     private readonly transactionRepository: ITransactionRepository,
   ) {}
 
-  async getTransactions(): Promise<TransactionResponseDTO[]> {
+  async getTransactionsByFilters(
+    inputFilters: GetTransactionsInputDTO,
+  ): Promise<PaginatedTransactionsDTO> {
+    const { offset, limit, filters: filtersDTO } = inputFilters;
+    const filters = TransactionMapper.mapFilterDTOToTransaction(filtersDTO);
+    const transactions = await this.transactionRepository.find(
+      offset,
+      limit,
+      filters,
+    );
+    const transactionsDTO = transactions.map((transaction) =>
+      TransactionMapper.toTransactionResponseDTO(transaction),
+    );
+    const response: PaginatedTransactionsDTO = {
+      data: transactionsDTO,
+      totalCount: transactionsDTO.length,
+      limit,
+      page: Math.floor(offset / limit) + 1,
+    };
+    return response;
+  }
+
+  async getTransactions(): Promise<PaginatedTransactionsDTO> {
     const transactions = await this.transactionRepository.findAll();
     const transactionsDTO = transactions.map((transaction) =>
       TransactionMapper.toTransactionResponseDTO(transaction),
     );
-    return transactionsDTO;
+    const response: PaginatedTransactionsDTO = {
+      data: transactionsDTO,
+      totalCount: transactionsDTO.length,
+      limit: transactionsDTO.length,
+      page: 1,
+    };
+    return response;
   }
 
   async getTransactionById(id: string): Promise<TransactionResponseDTO> {

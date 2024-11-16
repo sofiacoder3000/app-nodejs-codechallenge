@@ -32,7 +32,7 @@ export class AntiFraudConsumer implements OnModuleInit {
           : TransactionStatus.APPROVED;
         console.log(
           `Received transaction:
-          ${JSON.stringify(checkTransactionDTO)} + ' is:' + ${TransactionStatus[transactionStatus]}`,
+          ${JSON.stringify(checkTransactionDTO)} + ' is:' + ${TransactionStatus[transactionStatus]} from topic ${topic} and partition: ${partition}`,
         );
         this.transactionService.patchTransaction(
           checkTransactionDTO.transactionId,

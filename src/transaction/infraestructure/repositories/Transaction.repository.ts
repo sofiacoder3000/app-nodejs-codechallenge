@@ -31,6 +31,18 @@ export class TransactionRepository implements ITransactionRepository {
     return this.transactionRepository.find();
   }
 
+  async find(
+    offset: number,
+    limit: number,
+    filters: Partial<Transaction>,
+  ): Promise<Transaction[]> {
+    return this.transactionRepository.find({
+      where: filters,
+      skip: offset,
+      take: limit,
+      order: { createdAt: 'DESC' },
+    });
+  }
   async patch(
     id: string,
     partialTransaction: Partial<Transaction>,

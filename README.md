@@ -18,6 +18,11 @@ Don't forget that the proper way to submit your work is to fork the repo and cre
     - [5. Check swagger documentation in http://localhost:3000/api](#5-check-swagger-documentation-in-httplocalhost3000api)
     - [6. Check graphql documentation in http://localhost:3000/graphql](#6-check-graphql-documentation-in-httplocalhost3000graphql)
   - [Troubleshooting](#troubleshooting)
+  - [GraphQL API Usage](#graphql-api-usage)
+    - [Crear transacción](#crear-transacción)
+    - [Actualizar una transacción](#actualizar-una-transacción)
+    - [Obtener una transacción por id](#obtener-una-transacción-por-id)
+    - [Obtener transacciones con paginación y filtros](#obtener-transacciones-con-paginación-y-filtros)
 
 # Problem
 
@@ -200,3 +205,131 @@ $ netstat -an | grep 5432
 ```
 
 More info about fix, check: https://stackoverflow.com/questions/73906739/nestjs-app-cant-connect-to-postgresql-docker-container
+
+## GraphQL API Usage
+
+Este proyecto expone un API GraphQL. A continuación, se muestran ejemplos de queries y mutaciones que puedes utilizar.
+http://localhost:3000/graphql
+
+### Crear transacción
+
+```graphql
+mutation createTransaction($inputCreate: CreateTransactionDTO!) {
+  createTransaction(input: $inputCreate) {
+    createdAt
+    transactionExternalId
+    transactionType {
+      name
+    }
+    transactionStatus {
+      name
+    }
+    value
+  }
+}
+```
+
+Variables:
+
+```json
+{
+  "inputCreate": {
+    "accountExternalIdDebit": "32a1c938-4882-4dcd-9746-f57d9c96b3db",
+    "accountExternalIdCredit": "4444c938-4882-4dcd-9746-f57d9c96b3db",
+    "transferTypeId": "BANK_TRANSFER",
+    "value": 100.5
+  }
+}
+```
+
+### Actualizar una transacción
+
+```graphql
+mutation patchTransaction($id: String!, $inputPatch: PatchTransactionDTO!) {
+  patchTransaction(id: $id, input: $inputPatch) {
+    createdAt
+    transactionExternalId
+    transactionType {
+      name
+    }
+    transactionStatus {
+      name
+    }
+    value
+  }
+}
+```
+
+Variables:
+Reemplazar el valor de id por un el transactionExternalId que retorne la query createTransaction()
+
+```json
+{
+  "id": "f86157d5-6ef2-49f1-b2ba-be490655673d",
+  "inputPatch": {
+    "transactionStatus": "APPROVED"
+  }
+}
+```
+
+### Obtener una transacción por id
+
+```graphql
+query getTransaction($id: String!) {
+  getTransaction(id: $id) {
+    transactionExternalId
+    transactionType {
+      name
+    }
+    transactionStatus {
+      name
+    }
+    value
+    createdAt
+  }
+}
+```
+
+Variables:
+
+```grapql
+{
+  "id":"f86157d5-6ef2-49f1-b2ba-be490655673d"
+}
+```
+
+### Obtener transacciones con paginación y filtros
+
+```graphql
+query getTransactions($inputFilter: GetTransactionsInputDTO) {
+  getTransactions(input: $inputFilter) {
+    limit
+    page
+    totalCount
+    data {
+      transactionExternalId
+      transactionType {
+        name
+      }
+      transactionStatus {
+        name
+      }
+      value
+    }
+  }
+}
+```
+
+Variables:
+
+```grapql
+{
+  "inputFilter":{
+    "offset": 0,
+    "limit": 5,
+    "filters": {
+      "transactionStatus": "APPROVED"
+    }
+  }
+}
+```

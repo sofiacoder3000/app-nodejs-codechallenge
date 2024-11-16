@@ -37,10 +37,52 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input FiltersTransactionDTO {
+  """Identificador externo de la cuenta de crédito"""
+  accountExternalIdCredit: String
+
+  """Identificador externo de la cuenta de débito"""
+  accountExternalIdDebit: String
+
+  """Transaction Status"""
+  transactionStatus: TransferType
+
+  """Transfer type"""
+  transferTypeId: TransferTypeEnum
+
+  """Valor de la transacción"""
+  value: Float
+}
+
+input GetTransactionsInputDTO {
+  """Filtros de transacción"""
+  filters: FiltersTransactionDTO
+
+  """Límite de resultados"""
+  limit: Int = 10
+
+  """Desplazamiento de resultados"""
+  offset: Int
+}
+
 type Mutation {
   createTransaction(input: CreateTransactionDTO!): TransactionResponseDTO!
   patchTransaction(id: String!, input: PatchTransactionDTO!): TransactionResponseDTO!
   updateTransaction(id: String!, input: UpdateTransactionDTO!): TransactionResponseDTO!
+}
+
+type PaginatedTransactionsDTO {
+  """Lista de transacciones paginadas"""
+  data: [TransactionResponseDTO!]!
+
+  """Límite de transacciones por página"""
+  limit: Int!
+
+  """Número de página actual"""
+  page: Int!
+
+  """Total de transacciones disponibles"""
+  totalCount: Int!
 }
 
 input PatchTransactionDTO {
@@ -64,7 +106,7 @@ type Query {
   """Check transaction status"""
   checkTransaction(input: CheckTransactionDTO!): AntiFraudResponseDTO!
   getTransaction(id: String!): TransactionResponseDTO!
-  getTransactions: [TransactionResponseDTO!]!
+  getTransactions(input: GetTransactionsInputDTO): PaginatedTransactionsDTO!
 
   """Health check for Anti-Fraud service"""
   healthCheck: String!

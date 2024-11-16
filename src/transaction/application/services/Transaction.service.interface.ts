@@ -1,14 +1,18 @@
-import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
-import { UpdateTransactionDTO } from '@transaction/application/dtos/request/updateTransaction.dto';
-import { PatchTransactionDTO } from '@transaction/application/dtos/request/patchTransaction.dto';
-import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { CreateTransactionDTO } from '@transaction/application/dtos/request/create-transaction.dto';
+import { UpdateTransactionDTO } from '@transaction/application/dtos/request/update-transaction.dto';
+import { PatchTransactionDTO } from '@transaction/application/dtos/request/patch-transaction.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transaction-response.dto';
+import { GetTransactionsInputDTO } from '@transaction/application/dtos/request/get-transaction-input.dto';
+import { PaginatedTransactionsDTO } from '@transaction/application/dtos/paginated-transactions.dto';
 
 export interface ITransactionService {
   createTransaction(
     input: CreateTransactionDTO,
   ): Promise<TransactionResponseDTO>;
 
-  getTransactions(): Promise<TransactionResponseDTO[]>;
+  getTransactions(
+    filters: GetTransactionsInputDTO,
+  ): Promise<PaginatedTransactionsDTO>;
 
   getTransaction(id: string): Promise<TransactionResponseDTO>;
 

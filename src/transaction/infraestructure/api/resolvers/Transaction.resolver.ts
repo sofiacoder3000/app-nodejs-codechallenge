@@ -1,10 +1,12 @@
 import { Inject } from '@nestjs/common';
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-import { CreateTransactionDTO } from '@transaction/application/dtos/request/createTransaction.dto';
-import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
-import { UpdateTransactionDTO } from '@transaction/application/dtos/request/updateTransaction.dto';
+import { CreateTransactionDTO } from '@transaction/application/dtos/request/create-transaction.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transaction-response.dto';
+import { UpdateTransactionDTO } from '@transaction/application/dtos/request/update-transaction.dto';
 import { ITransactionService } from '@transaction/application/services/transaction.service.interface';
-import { PatchTransactionDTO } from '@transaction/application/dtos/request/patchTransaction.dto';
+import { PatchTransactionDTO } from '@transaction/application/dtos/request/patch-transaction.dto';
+import { GetTransactionsInputDTO } from '@transaction/application/dtos/request/get-transaction-input.dto';
+import { PaginatedTransactionsDTO } from '@transaction/application/dtos/paginated-transactions.dto';
 
 @Resolver()
 export class TransactionResolver {
@@ -13,9 +15,12 @@ export class TransactionResolver {
     private readonly transactionService: ITransactionService,
   ) {}
 
-  @Query(() => [TransactionResponseDTO])
-  async getTransactions(): Promise<TransactionResponseDTO[]> {
-    return this.transactionService.getTransactions();
+  @Query(() => PaginatedTransactionsDTO)
+  async getTransactions(
+    @Args('input', { type: () => GetTransactionsInputDTO, nullable: true })
+    input?: GetTransactionsInputDTO,
+  ): Promise<PaginatedTransactionsDTO> {
+    return this.transactionService.getTransactions(input);
   }
 
   @Query(() => TransactionResponseDTO)

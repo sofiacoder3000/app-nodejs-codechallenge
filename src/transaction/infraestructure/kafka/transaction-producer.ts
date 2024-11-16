@@ -24,6 +24,5 @@ export class TransactionProducer implements ITransactionProducer {
     });
 
     await kafkaProducer.disconnect();
-    console.log(`Transaction event sent: ${transaction.transactionExternalId}`);
   }
 }

@@ -1,6 +1,6 @@
-import { UpdateTransactionDTO } from '@transaction/application/dtos/request/updateTransaction.dto';
-import { PatchTransactionDTO } from '@transaction/application/dtos/request/patchTransaction.dto';
-import { TransactionResponseDTO } from '@transaction/application/dtos/transactionResponse.dto';
+import { UpdateTransactionDTO } from '@transaction/application/dtos/request/update-transaction.dto';
+import { PatchTransactionDTO } from '@transaction/application/dtos/request/patch-transaction.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transaction-response.dto';
 
 export interface IUpdateTransactionUseCase {
   patch(
