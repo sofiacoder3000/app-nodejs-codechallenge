@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "88720be9-90bf-4a71-ab4c-7d6cd2b5f57d",
+		"name": "ChallengeNest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6838496"
+	},
+	"item": [
+		{
+			"name": "Anti Fraude",
+			"item": [
+				{
+					"name": "Check Transaction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"value\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/anti-fraud/check",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"anti-fraud",
+								"check"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Create transaction",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"id-transaction\", jsonData.transactionExternalId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"accountExternalIdDebit\": \"4d70f4df-ce2a-4249-9ed9-4db00110e56c\",\n    \"accountExternalIdCredit\": \"4583e40c-186f-4b07-af2a-76198ab24675\",\n    \"transferTypeId\": 2,\n    \"value\": 7000.5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/transactions",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get transactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/transactions",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get transactions filters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/transactions?limit=50&offset=0&transactionStatus=3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "transferType",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "transactionStatus",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get transaction By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/transactions/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id-transaction}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch transaction",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transferTypeId\": null,\n    \"value\": 32.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/transactions/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id-transaction}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put Transaction",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transferTypeId\":2,\n    \"value\":155.5,\n    \"transactionStatus\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/transactions/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id-transaction}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
