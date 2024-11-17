@@ -14,7 +14,7 @@ Don't forget that the proper way to submit your work is to fork the repo and cre
     - [1. Installation](#1-installation)
     - [2. Config .env](#2-config-env)
     - [3. Run containers in the background](#3-run-containers-in-the-background)
-    - [4. Run project](#4-run-project)
+    - [4. Run project (Only if you used docker-compose.yml)](#4-run-project-only-if-you-used-docker-composeyml)
     - [5. Check swagger documentation in http://localhost:3000/api](#5-check-swagger-documentation-in-httplocalhost3000api)
     - [6. Check graphql documentation in http://localhost:3000/graphql](#6-check-graphql-documentation-in-httplocalhost3000graphql)
   - [Troubleshooting](#troubleshooting)
@@ -126,6 +126,8 @@ DB_PORT=
 DB_USER=
 DB_PASSWORD=
 DB_NAME=
+KAFKA_CLIENT_ID=transaction-service
+KAFKA_BROKER="localhost:9092"
 ```
 
 or
@@ -140,9 +142,13 @@ DB_PORT=
 DB_USER=
 DB_PASSWORD=
 DB_NAME=
+KAFKA_CLIENT_ID=transaction-service
+KAFKA_BROKER="kafka:29092"
 ```
 
 ### 3. Run containers in the background
+
+Inicialize docker client
 
 ```bash
 $ docker-compose -f docker-compose.yml up -d
@@ -154,7 +160,7 @@ or option 2: use docker-compose.dev.yml to dockerize the entire project
 $ docker-compose -f docker-compose.dev.yml up -d
 ```
 
-### 4. Run project
+### 4. Run project (Only if you used docker-compose.yml)
 
 ```bash
 # development

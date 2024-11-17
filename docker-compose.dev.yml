@@ -52,12 +52,15 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
+      - KAFKA_CLIENT_ID=${KAFKA_CLIENT_ID}
+      - KAFKA_BROKER=${KAFKA_BROKER}
     ports:
       - '3000:3000'
     networks:
       - app-network
     depends_on:
       - postgres
+      - kafka
     volumes:
       - .:/app
 networks:

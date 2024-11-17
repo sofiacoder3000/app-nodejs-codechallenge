@@ -11,11 +11,12 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@database/*": ["src/database/*"],
+      "@database/*": ["src/shared/database/*"],
       "@transaction/*": ["src/transaction/*"],
       "@antifraud/*": ["src/anti-fraud/*"],
       "@shared/*": ["src/shared/*"],
-      "@infraestructure/*": ["src/infraestructure/*"]
+      "@infraestructure/*": ["src/infraestructure/*"],
+      "@kafka/*": ["src/shared/kafka/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

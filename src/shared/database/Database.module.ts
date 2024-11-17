@@ -15,7 +15,7 @@ import databaseConfig from '@infraestructure/config/database.config';
         username: configService.get('database.username'),
         password: configService.get('database.password'),
         database: configService.get('database.database'),
-        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
         synchronize: true, // Be cautious about using synchronize in production
       }),
       inject: [ConfigService],

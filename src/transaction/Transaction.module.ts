@@ -9,9 +9,10 @@ import { CreateTransactionUseCase } from '@transaction/application/use-cases/cre
 import { GetTransactionsUseCase } from '@transaction/application/use-cases/get-transactions-use-case';
 import { UpdateTransactionUseCase } from '@transaction/application/use-cases/update-transaction-use-case';
 import { TransactionProducer } from '@transaction/infraestructure/kafka/transaction-producer';
+import { KafkaModule } from '@shared/kafka/kafka.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TransactionEntity])],
+  imports: [TypeOrmModule.forFeature([TransactionEntity]), KafkaModule],
   providers: [
     {
       provide: 'ITransactionService',

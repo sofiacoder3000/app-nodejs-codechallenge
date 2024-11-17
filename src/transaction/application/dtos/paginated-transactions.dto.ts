@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { ApiProperty } from '@nestjs/swagger';
-import { TransactionResponseDTO } from './transaction-response.dto';
+import { TransactionResponseDTO } from '@transaction/application/dtos/transaction-response.dto';
 
 @ObjectType()
 export class PaginatedTransactionsDTO {

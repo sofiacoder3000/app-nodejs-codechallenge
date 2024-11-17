@@ -8,6 +8,8 @@ import { TransactionModule } from '@transaction/transaction.module';
 import { join } from 'path';
 import { DatabaseModule } from '@database/database.module';
 import { AntiFraudModule } from '@antifraud/anti-fraud.module';
+import { KafkaService } from '@shared/kafka/kafka.service';
+import { KafkaModule } from '@shared/kafka/kafka.module';
 
 @Module({
   imports: [
@@ -25,8 +27,9 @@ import { AntiFraudModule } from '@antifraud/anti-fraud.module';
     DatabaseModule,
     TransactionModule,
     AntiFraudModule,
+    KafkaModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, KafkaService],
 })
 export class AppModule {}

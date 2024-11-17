@@ -1,9 +1,10 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { CheckTransactionDTO } from '@antifraud/application/dtos/check-transaction.dto';
-import { kafkaConsumer, KAFKA_TOPICS } from '@shared/config/kafka.config';
+import { KAFKA_TOPICS } from '@shared/kafka/kafka.config';
 import { IAntifraudService } from '@antifraud/application/services/anti-fraud.service.interface';
 import { ITransactionService } from '@transaction/application/services/transaction.service.interface';
 import { TransactionStatus } from '@transaction/domain/enums/transaction-status.enum';
+import { KafkaService } from '@shared/kafka/kafka.service';
 
 @Injectable()
 export class AntiFraudConsumer implements OnModuleInit {
@@ -12,16 +13,17 @@ export class AntiFraudConsumer implements OnModuleInit {
     private readonly antifraudService: IAntifraudService,
     @Inject('ITransactionService')
     private readonly transactionService: ITransactionService,
+    private readonly kafkaService: KafkaService,
   ) {}
 
   async onModuleInit() {
-    await kafkaConsumer.connect();
-    await kafkaConsumer.subscribe({
+    const consumer = this.kafkaService.getConsumer();
+    await consumer.subscribe({
       topic: KAFKA_TOPICS.TRANSACTION_CREATED,
       fromBeginning: true,
     });
 
-    await kafkaConsumer.run({
+    await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
         const checkTransactionDTO = JSON.parse(
           message.value.toString(),

@@ -7,9 +7,10 @@ import { IsFraudService } from '@antifraud/application/use-cases/is-fraud/is-fra
 import { AntiFraudConsumer } from '@antifraud/infrastructure/kafka/anti-fraud.consumer';
 import { TransactionService } from '@transaction/infraestructure/services/transaction.service';
 import { TransactionModule } from '@transaction/transaction.module';
+import { KafkaModule } from '@shared/kafka/kafka.module';
 
 @Module({
-  imports: [TransactionModule],
+  imports: [TransactionModule, KafkaModule],
   providers: [
     {
       provide: 'IAntifraudService',

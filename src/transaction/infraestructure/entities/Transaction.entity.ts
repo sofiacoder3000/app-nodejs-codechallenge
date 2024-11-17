@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  BeforeUpdate,
+} from 'typeorm';
 import { TransferType } from '@transaction/domain/enums/transfer-type.enum';
 import { TransactionStatus } from '@transaction/domain/enums/transaction-status.enum'; // Enum para los estados
 
@@ -42,8 +48,17 @@ export class TransactionEntity {
   @Column({ type: 'bigint', nullable: false })
   createdAt: number;
 
+  @Column({ type: 'bigint', nullable: false })
+  updatedAt: number;
+
   @BeforeInsert()
   setCreationDate() {
-    this.createdAt = Date.now(); // Se asigna solo al insertar la entidad
+    this.createdAt = Date.now();
+    this.updatedAt = Date.now();
+  }
+
+  @BeforeUpdate()
+  updateModificationDate() {
+    this.updatedAt = Date.now();
   }
 }
