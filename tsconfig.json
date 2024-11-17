@@ -16,7 +16,8 @@
       "@antifraud/*": ["src/anti-fraud/*"],
       "@shared/*": ["src/shared/*"],
       "@infraestructure/*": ["src/infraestructure/*"],
-      "@kafka/*": ["src/shared/kafka/*"]
+      "@kafka/*": ["src/shared/kafka/*"],
+      "@mocks/*": ["__mocks__/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

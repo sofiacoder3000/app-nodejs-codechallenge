@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CheckTransactionDTO } from '@antifraud/application/dtos/check-transaction.dto';
 import { ITransactionProducer } from '@transaction/application/ports/transaction-producer.interface';
-import { Transaction } from '@transaction/domain/models/transaction';
+import { Transaction } from '@transaction/domain/models/transaction.model';
 import { KafkaService } from '@shared/kafka/kafka.service';
 import { KAFKA_TOPICS } from '@shared/kafka/kafka.config';
 

@@ -6,7 +6,7 @@ import {
   TransactionStatusDescriptions,
 } from '@transaction/domain/enums/transaction-status.enum';
 import { TransferTypeDescriptions } from '@transaction/domain/enums/transfer-type.enum';
-import { Transaction } from '@transaction/domain/models/transaction';
+import { Transaction } from '@transaction/domain/models/transaction.model';
 import { FiltersTransactionDTO } from '@transaction/application/dtos/request/filters-transaction.dto';
 
 export class TransactionMapper {

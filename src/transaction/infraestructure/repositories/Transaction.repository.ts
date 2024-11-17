@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ITransactionRepository } from '@transaction/domain/ports/transaction.repository.interface';
-import { Transaction } from '@transaction/domain/models/transaction';
+import { Transaction } from '@transaction/domain/models/transaction.model';
 import { TransactionEntity } from '@transaction/infraestructure/entities/transaction.entity';
 
 @Injectable()
